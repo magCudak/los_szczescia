@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Los szczęścia</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    {% block static %}{% endblock static %}
+    {% block script %}{% endblock script %}
+
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: GhostWhite;
+            color: grey;
+            text-align: center;
+            font-size: 11px;
+            padding-bottom: 3px;
+            padding-top: 3px;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-light">
+
+    <a class="navbar-brand" href="{% url 'boxes:home' %}">LosSzczęścia</a>
+
+    <div class="container-fluid">
+        {% block navbar %}{% endblock navbar %}
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+                <li><a class="nav-link" href="{% url 'boxes:logout' %}">
+                    <i class="material-icons" style="font-size: 12px">lock</i> Wyloguj</a>
+                </li>
+            {% else %}
+                <li><a class="nav-link" href="{% url 'boxes:login' %}">
+                    <i class="material-icons" style="font-size: 12px">lock_open</i> Zaloguj</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+{% block content %}
+
+{% endblock content %}
+
+<div class="footer" style="margin-bottom:0">
+    &copy; Copyright 2020,
+    <a href="{% url 'boxes:home' %}">CUD_TEAM</a>. All rights reserved.
+</div>
+</body>
+</html>

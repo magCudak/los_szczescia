@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block navbar %}
+    <ul class="navbar-nav navbar-left">
+        <li class="nav-item"><a href="{% url 'boxes:home' %}">Strona główna</a></li>
+        {% if user.is_authenticated %}
+            <li class="nav-item"><a href="{% url 'boxes:losuj' %}"> Losuj</a></li>
+        {% endif %}
+    </ul>
+{% endblock navbar %}
+
+
+{% block content %}
+
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h2>Logowanie</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Logowanie</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
