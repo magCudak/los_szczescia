@@ -8,6 +8,9 @@
         </li>
         {% if user.is_authenticated %}
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'boxes:user_profile' %}"> Mój profil</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'boxes:losuj' %}"> Losuj</a>
             </li>
         {% endif %}

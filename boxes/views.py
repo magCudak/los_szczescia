@@ -19,7 +19,6 @@ def index(request):
 def profile_page(request):
     current_user = Person.objects.get(username=request.user.username)
     context = {
-        'header_1': 'O mnie',
         'person': current_user
     }
     return render(request, 'profile.html', context)
@@ -27,17 +26,14 @@ def profile_page(request):
 
 @login_required
 def random_page(request):
-    print(request.method)
+    chosen_person = None
     if request.method == "POST":
-        print(request.POST)
         if request.POST.get('losuj_button'):
             current_user = Person.objects.get(username=request.user.username)
-
             if current_user.chosen_person is None:
                 possible_users = Person.objects.all() \
                     .exclude(family=current_user.family) \
                     .filter(is_chosen=False)
-
                 if possible_users:
                     random_person = random.choice(possible_users)
                     random_person.is_chosen = True
@@ -46,11 +42,19 @@ def random_page(request):
                     current_user.save()
                 else:
                     messages.error(request,
-                                   'Poważny konflikt interesów! Brak wolnych losów! Skontaktuj się z pomocą techniczną!')
+                                   'Poważny konflikt interesów! Brak wolnych losów! '
+                                   'Skontaktuj się z pomocą techniczną!')
             else:
                 messages.error(request, 'Już wylosowano! Jeden prezent do kupienia wystarczy!')
+        if request.POST.get('check'):
+            current_user = Person.objects.get(username=request.user.username)
+            if current_user.chosen_person is None:
+                messages.error(request,
+                               'Jeszcze nie ma wylosowanej osoby! Sprawdź później.')
+            else:
+                chosen_person = current_user.chosen_person
 
-    return render(request, 'losuj.html', {})
+    return render(request, 'losuj.html', {'goal': chosen_person})
 
 
 @login_required

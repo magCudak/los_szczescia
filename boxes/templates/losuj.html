@@ -8,6 +8,9 @@
         </li>
         {% if user.is_authenticated %}
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'boxes:user_profile' %}"> Mój profil</a>
+            </li>
+            <li class="nav-item active">
                 <a class="nav-link" href="{% url 'boxes:losuj' %}"> Losuj</a>
             </li>
         {% endif %}
@@ -31,8 +34,8 @@
                         </button>
                     </form>
                 </div>
-
-                <div> a tutaj sprawdzić, kogo wylosowano: </div>
+                <p></p>
+                <div> a tutaj sprawdzić, kogo wylosowano:</div>
 
                 <div class="container">
                     <form method="POST">
@@ -43,16 +46,17 @@
                     </form>
                 </div>
 
+                <p></p>
 
-                <div class="container">
-                    <form method="POST">
+                {% if goal is not None %}
 
-                        {% csrf_token %}
-                        <button type="submit" name="losuj_button" value="clicked" class="btn btn-primary">
-                            Losuj
-                        </button>
-                    </form>
-                </div>
+                    <div class="container">
+                        <ul>
+                            <p> Nazwisko: {{ goal.second_name }} </p>
+                            <p> Imię: {{ goal.first_name }} </p>
+                        </ul>
+                    </div>
+                {% endif %}
 
                 <p></p>
 

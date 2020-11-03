@@ -7,6 +7,9 @@
             <a class="nav-link" href="{% url 'boxes:home' %}">Strona główna </a>
         </li>
         {% if user.is_authenticated %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'boxes:user_profile' %}"> Mój profil</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'boxes:losuj' %}"> Losuj</a>
             </li>
@@ -22,20 +25,37 @@
 
             <div class="media-body">
 
-                {% if user.is_authenticated %}
-                    <h2> Witamy {{ user.username }}!</h2>
-                {% endif %}
+                <div class="card" style="width:400px">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            {% if user.is_authenticated %}
+                                <h2> Witamy {{ user.username }}!</h2>
+                            {% endif %}
+                        </h4>
+                        <div class="card-text">
+                            <ul>
+                                <p> Nazwisko: {{ person.second_name }} </p>
+                                <p> Imię: {{ person.first_name }} </p>
+                                {% if user.chosen_person %}
+                                    <p class="badge badge-pill badge-success"> Już wylosowano! </p>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
 
-                <ul>
-                    <p> Nazwisko: {{ person.second_name }} </p>
-                    <p> Imię: {{ person.username }} </p>
-                </ul>
+                </div>
 
             </div>
 
-            {% load static %}
-            <img src="{% static 'avatar.png' %}" alt="John Doe" class="ml-3 mt-3 rounded-circle" style="width: 100px;">
-
+            {% if person.is_man %}
+                {% load static %}
+                <img src="{% static 'avatar_m.png' %}" alt="John Doe" class="ml-3 mt-3 rounded-circle card-img-bottom"
+                    style="width: 200px;">
+            {% else %}
+                {% load static %}
+                <img src="{% static 'avatar_f.png' %}" alt="John Doe" class="ml-3 mt-3 rounded-circle card-img-bottom"
+                    style="width: 200px;">
+            {% endif %}
         </div>
     </div>
 
