@@ -25,7 +25,7 @@ SECRET_KEY = '$y2s_-brb&ct2nem431#uxp^&zw14_=&t-vq$h2f^am-=q-f6k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cudteam.pythonanywhere.com/', '127.0.0.1']
+ALLOWED_HOSTS = ['cudteam.pythonanywhere.com', '127.0.0.1']
 
 # Application definition
 
@@ -113,10 +113,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'boxes/static')
-STATIC_URL = '/boxes/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "boxes/static"),
+    os.path.join(BASE_DIR, "static"),
 )
 
 AUTH_USER_MODEL = 'boxes.Person'
