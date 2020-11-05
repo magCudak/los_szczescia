@@ -90,15 +90,16 @@ def random_page(request):
             people = Person.objects.all().exclude(is_superuser=True)
             for person in people:
                 print(person)
-                chosen_person_family = person.chosen_person.family.family_name
-                person_family = person.family.family_name
+                if person.chosen_person is not None:
+                    chosen_person_family = person.chosen_person.family.family_name
+                    person_family = person.family.family_name
 
-                if chosen_person_family == person_family:
-                    messages.error(request,
-                                   'Błąd w losowaniu :( '
-                                   '%s == %s' % (chosen_person_family, person_family))
-                else:
-                    messages.success(request, "Poprawne dopasowanie!")
+                    if chosen_person_family == person_family:
+                        messages.error(request,
+                                       'Błąd w losowaniu :( '
+                                       '%s == %s' % (chosen_person_family, person_family))
+                    else:
+                        messages.success(request, "Poprawne dopasowanie!")
 
         if request.POST.get("superchange"):
             current_changer = Changer.objects.all()[0]
