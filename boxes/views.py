@@ -100,6 +100,8 @@ def random_page(request):
                                        '%s == %s' % (chosen_person_family, person_family))
                     else:
                         messages.success(request, "Poprawne dopasowanie!")
+                else:
+                    messages.info(request, "Nie wylosowano!")
 
         if request.POST.get("superchange"):
             current_changer = Changer.objects.all()[0]
