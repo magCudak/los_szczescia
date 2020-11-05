@@ -59,7 +59,7 @@ def random_page(request):
             current_user = Person.objects.get(username=request.user.username)
 
             while True:
-                people = Person.objects.all().exclude(is_superuser=True)
+                people = Person.objects.all().exclude(is_superuser=True).filter(chosen_person=None)
                 current_per = random.choice(people)
                 if current_per is None:
                     return render(request, 'losuj.html')
