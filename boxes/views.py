@@ -61,6 +61,8 @@ def random_page(request):
             while True:
                 people = Person.objects.all().exclude(is_superuser=True)
                 current_per = random.choice(people)
+                if current_per is None:
+                    return render(request, 'losuj.html')
                 if current_per.chosen_person is None:
                     possible_users = Person.objects.all() \
                         .exclude(family=current_per.family) \
@@ -72,7 +74,7 @@ def random_page(request):
                         random_person.save()
                         current_per.chosen_person = random_person
                         current_per.save()
-                        print(current_per)
+                        # print(current_per)
                     else:
                         messages.error(request,
                                        'Poważny konflikt interesów! Brak wolnych losów! '
