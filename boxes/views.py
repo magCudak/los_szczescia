@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 
 from boxes.forms import UserLoginForm
-from boxes.models import Person
+from boxes.models import Person, Changer
 
 
 def index(request):
@@ -33,7 +33,8 @@ def random_page(request):
             if current_user.chosen_person is None:
                 possible_users = Person.objects.all() \
                     .exclude(family=current_user.family) \
-                    .filter(is_chosen=False)
+                    .filter(is_chosen=False) \
+                    .exclude(is_superuser=True)
                 if possible_users:
                     random_person = random.choice(possible_users)
                     random_person.is_chosen = True
@@ -53,6 +54,47 @@ def random_page(request):
                                'Jeszcze nie ma wylosowanej osoby! Sprawdź później.')
             else:
                 chosen_person = current_user.chosen_person
+
+        if request.POST.get('ha'):
+            current_user = Person.objects.get(username=request.user.username)
+
+            while True:
+                people = Person.objects.all().exclude(is_superuser=True)
+                current_per = random.choice(people)
+                if current_per.chosen_person is None:
+                    possible_users = Person.objects.all() \
+                        .exclude(family=current_per.family) \
+                        .filter(is_chosen=False) \
+                        .exclude(is_superuser=True)
+                    if possible_users:
+                        random_person = random.choice(possible_users)
+                        random_person.is_chosen = True
+                        random_person.save()
+                        current_per.chosen_person = random_person
+                        current_per.save()
+                        print(current_per)
+                    else:
+                        messages.error(request,
+                                   'Poważny konflikt interesów! Brak wolnych losów! '
+                                   'Skontaktuj się z pomocą techniczną! %s' % current_per.username)
+
+        if request.POST.get('clean'):
+            current_user = Person.objects.get(username=request.user.username)
+            people = Person.objects.all().exclude(is_superuser=True)
+            people.update(is_chosen=False)
+            people.update(chosen_person=None)
+
+        if request.POST.get('supercheck'):
+            print("supercheck")
+            current_user = Person.objects.get(username=request.user.username)
+            people = Person.objects.all().exclude(is_superuser=True)
+            for person in people:
+                print(person.chosen_person)
+
+        if request.POST.get("superchange"):
+            current_changer = Changer.objects.all()[0]
+            current_changer.update(possible=(not current_changer))
+            print(current_changer.possible)
 
     return render(request, 'losuj.html', {'goal': chosen_person})
 

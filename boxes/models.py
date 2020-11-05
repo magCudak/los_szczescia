@@ -21,3 +21,7 @@ class Person(AbstractUser):
 
     def __str__(self):
         return self.full_name()
+
+
+class Changer(models.Model):
+    possible = models.BooleanField(default=False)

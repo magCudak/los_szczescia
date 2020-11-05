@@ -22,43 +22,112 @@
 
     <div class="container">
         <div class="jumbotron">
-
             {% if user.is_authenticated %}
-                <div> {{ user.username }}, tutaj możesz wylosować karteczkę z osobą:</div>
 
-                <div class="container">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <button type="submit" name="losuj_button" value="clicked" class="btn btn-primary">
-                            Losuj
-                        </button>
-                    </form>
-                </div>
-                <p></p>
-                <div> a tutaj sprawdzić, kogo wylosowano:</div>
+                <div class="row">
+                    <div class="col">
+                        <div> {{ user.username }}, tutaj możesz wylosować karteczkę z osobą:</div>
 
-                <div class="container">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <button type="submit" name="check" value="clicked" class="btn btn-primary">
-                            Sprawdź
-                        </button>
-                    </form>
-                </div>
-
-                <p></p>
-
-                {% if goal is not None %}
-
-                    <div class="container">
-                        <ul>
-                            <p> Nazwisko: {{ goal.second_name }} </p>
-                            <p> Imię: {{ goal.first_name }} </p>
-                        </ul>
+                        <div class="container">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <button type="submit" name="losuj_button" value="clicked" class="btn btn-primary">
+                                    Losuj
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                {% endif %}
+                    <div class="col">
+                        <div> a tutaj sprawdzić, kogo wylosowano:</div>
 
-                <p></p>
+                        <div class="container">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <button type="submit" name="check" value="clicked" class="btn btn-primary">
+                                    Sprawdź
+                                </button>
+                            </form>
+                        </div>
+
+                        <p></p>
+
+                        {% if goal is not None %}
+                            <div class="jumbotron media border">
+
+                                <div class="media-body">
+
+                                    <div class="card" style="width:400px">
+                                        <div class="card-body">
+                                            <div class="card-text">
+                                                <ul>
+                                                    <p> Nazwisko: {{ goal.second_name }} </p>
+                                                    <p> Imię: {{ goal.first_name }} </p>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                {% if goal.is_man %}
+                                    {% load static %}
+                                    <img src="{% static 'avatar_m.png' %}" alt="John Doe"
+                                         class="ml-3 mt-3 rounded-circle card-img-bottom"
+                                         style="width: 200px;">
+                                {% else %}
+                                    {% load static %}
+                                    <img src="{% static 'avatar_f.png' %}" alt="John Doe"
+                                         class="ml-3 mt-3 rounded-circle card-img-bottom"
+                                         style="width: 200px;">
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        <p></p>
+
+                    </div>
+
+                    {% if user.is_superuser %}
+                        <div class="col">
+                            <div class="container">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" name="ha" value="clicked" class="btn btn-primary">
+                                        Ha!
+                                    </button>
+                                </form>
+                            </div>
+                            <p></p>
+                            <div class="container">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" name="clean" value="clicked" class="btn btn-primary">
+                                        Wyczysc!
+                                    </button>
+                                </form>
+                            </div>
+                            <p></p>
+                            <div class="container">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" name="supercheck" value="clicked" class="btn btn-primary">
+                                        Sprawdzam!
+                                    </button>
+                                </form>
+                            </div>
+                            <p></p>
+                            <div class="container">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" name="superchange" value="clicked" class="btn btn-primary">
+                                        Wymiana!
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
 
                 <div class="container">
                     {% if error_message %}
