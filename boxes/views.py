@@ -77,6 +77,10 @@ def random_page(request):
                         messages.error(request,
                                        'Poważny konflikt interesów! Brak wolnych losów! '
                                        'Skontaktuj się z pomocą techniczną! %s' % current_per.username)
+                        return render(request, 'losuj.html')
+                else:
+                    messages.error(request,
+                                   'Już wylosowano dla %s' % current_per.username)
 
         if request.POST.get('clean'):
             current_user = Person.objects.get(username=request.user.username)
