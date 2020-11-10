@@ -41,6 +41,7 @@ def random_page(request):
                     random_person.save()
                     current_user.chosen_person = random_person
                     current_user.save()
+                    messages.success(request, 'Poprawnie wylosowano! Sprawdź, kogo!')
                 else:
                     messages.error(request,
                                    'Poważny konflikt interesów! Brak wolnych losów! '
@@ -94,9 +95,10 @@ def random_page(request):
             print("supercheck")
             current_user = Person.objects.get(username=request.user.username)
             people = Person.objects.all().exclude(is_superuser=True)
+            chosen_people = []
             for person in people:
-                print(person)
                 if person.chosen_person is not None:
+                    chosen_people.append(person.chosen_person)
                     chosen_person_family = person.chosen_person.family.family_name
                     person_family = person.family.family_name
 
@@ -108,6 +110,8 @@ def random_page(request):
                         messages.success(request, "Poprawne dopasowanie!")
                 else:
                     messages.info(request, "Nie wylosowano!")
+            for person in chosen_people:
+                messages.info(request, "%s wylosowano" % person.username)
 
         if request.POST.get("superchange"):
             current_changer = Changer.objects.all()[0]

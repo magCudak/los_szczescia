@@ -24,32 +24,41 @@
         <div class="jumbotron">
             {% if user.is_authenticated %}
 
+                <div class="container-fluid">
+                    Na tej stronie znajdują się najważniejsze przyciski w aplikacji.<br>
+                    Klikając perwszy przycisk, można wylosować dla siebie jedną osobę (przycisk "Losuj").<br>
+                    Natomiast drugi przycisk ("Sprawdź") - pozwala na sprawdzenie, kogo się wylosowało.
+                </div>
+
+                <p></p>
+
                 <div class="row">
-                    <div class="col">
-                        <div> {{ user.username }}, tutaj możesz wylosować karteczkę z osobą:</div>
+                    <div class="col card bg-light text-dark align-middle"
+                         style="padding-top: 25px; padding-bottom: 25px;">
+                        <div> {{ user.username }}, tutaj możesz uruchomić maszynę losującą oraz sprawdzić,
+                            kto w wyniku losowania został wskazany przez liczby pseudolosowe.
+                        </div>
+                        <p></p>
 
                         <div class="container">
                             <form method="POST">
                                 {% csrf_token %}
-                                <button type="submit" name="losuj_button" value="clicked" class="btn btn-primary">
+                                <button type="submit" name="losuj_button" value="clicked"
+                                        class="btn btn-primary btn-block btn-lg">
                                     Losuj
+                                </button>
+                            </form>
+                            <p></p>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <button type="submit" name="check" value="clicked"
+                                        class="btn btn-primary btn-block btn-lg">
+                                    Sprawdź
                                 </button>
                             </form>
                         </div>
                     </div>
                     <div class="col">
-                        <div> a tutaj sprawdzić, kogo wylosowano:</div>
-
-                        <div class="container">
-                            <form method="POST">
-                                {% csrf_token %}
-                                <button type="submit" name="check" value="clicked" class="btn btn-primary">
-                                    Sprawdź
-                                </button>
-                            </form>
-                        </div>
-
-                        <p></p>
 
                         {% if goal is not None %}
                             <div class="jumbotron media border">
@@ -57,6 +66,10 @@
                                 <div class="media-body">
 
                                     <div class="card" style="width:400px">
+                                        <div class="card-header">
+                                            Wylosowany szczęśliwiec
+                                        </div>
+
                                         <div class="card-body">
                                             <div class="card-text">
                                                 <ul>
@@ -73,7 +86,7 @@
                                 {% if goal.is_man %}
                                     {% load static %}
                                     <img src="{% static 'avatar_m.png' %}" alt="John Doe"
-                                         class="ml-3 mt-3 rounded-circle card-img-bottom"
+                                         class="ml-3 rounded-circle card-img-bottom"
                                          style="width: 200px;">
                                 {% else %}
                                     {% load static %}
@@ -83,6 +96,24 @@
                                 {% endif %}
                             </div>
                         {% endif %}
+
+                        <div class="container">
+                            {% if error_message %}
+                                <div class="alert alert-success">
+
+                                    <p><strong>{{ error_message }}</strong></p>
+                                </div>
+
+                            {% endif %}
+
+                            {% if messages %}
+                                <div class="alert alert-success">
+                                    {% for message in messages %}
+                                        <p><strong>{{ message }}</strong></p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
 
                         <p></p>
 
@@ -128,26 +159,9 @@
                         </div>
                     {% endif %}
                 </div>
-
-                <div class="container">
-                    {% if error_message %}
-                        <div class="alert alert-success">
-
-                            <p><strong>{{ error_message }}</strong></p>
-                        </div>
-
-                    {% endif %}
-
-                    {% if messages %}
-                        <div class="alert alert-success">
-                            {% for message in messages %}
-                                <p><strong>{{ message }}</strong></p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
             {% endif %}
 
         </div>
+    </div>
 
 {% endblock content %}

@@ -30,6 +30,12 @@
         </div>
         <p></p>
         <div>
+            Jeśli bierzesz udział w losowaniu, <a class="nav-link" href="{% url 'boxes:login' %}">zaloguj się.</a>
+            Dalesze instrukcje zobaczysz w panelu użytkownika:<a class="nav-link" href="{% url 'boxes:user_profile' %}">
+            Mój profil</a>
+        </div>
+        <p></p>
+        <div>
             {% load static %}
             <img src="{% static 'obraz.png' %}"
                  style="width: 50%"
