@@ -22,12 +22,17 @@
 
     <div class="container">
         <div class="jumbotron text-center">
-            <h2>Logowanie</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-primary">Logowanie</button>
-            </form>
+
+            {% if user.is_authenticated %}
+                <h2>Jesteś już zalogowany!</h2>
+            {% else %}
+                <h2>Logowanie</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Logowanie</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}
