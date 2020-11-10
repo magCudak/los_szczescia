@@ -120,12 +120,16 @@
                     </div>
 
                     {% if user.is_superuser %}
-                        <div class="col">
+                        <div class="col card bg-light text-dark align-middle"
+                             style="padding-top: 25px; padding-bottom: 25px;">
+
+                            <h3 style="text-align: center;" >Panel administratora</h3>
                             <div class="container">
                                 <form method="POST">
                                     {% csrf_token %}
-                                    <button type="submit" name="ha" value="clicked" class="btn btn-primary">
-                                        Ha!
+                                    <button type="submit" name="ha" value="clicked"
+                                            class="btn btn-primary btn-block btn-lg">
+                                        Wylosuj wszystkim!
                                     </button>
                                 </form>
                             </div>
@@ -133,8 +137,9 @@
                             <div class="container">
                                 <form method="POST">
                                     {% csrf_token %}
-                                    <button type="submit" name="clean" value="clicked" class="btn btn-primary">
-                                        Wyczysc!
+                                    <button type="submit" name="clean" value="clicked"
+                                            class="btn btn-primary btn-block btn-lg">
+                                        Wyczyść!
                                     </button>
                                 </form>
                             </div>
@@ -142,7 +147,8 @@
                             <div class="container">
                                 <form method="POST">
                                     {% csrf_token %}
-                                    <button type="submit" name="supercheck" value="clicked" class="btn btn-primary">
+                                    <button type="submit" name="supercheck" value="clicked"
+                                            class="btn btn-primary btn-block btn-lg">
                                         Sprawdzam!
                                     </button>
                                 </form>
@@ -151,8 +157,9 @@
                             <div class="container">
                                 <form method="POST">
                                     {% csrf_token %}
-                                    <button type="submit" name="superchange" value="clicked" class="btn btn-primary">
-                                        Wymiana!
+                                    <button type="submit" name="superchange" value="clicked"
+                                            class="btn btn-primary btn-block btn-lg">
+                                        Wymiana! Nie działa...
                                     </button>
                                 </form>
                             </div>
