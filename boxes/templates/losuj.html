@@ -20,7 +20,7 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="jumbotron">
             {% if user.is_authenticated %}
 
@@ -97,7 +97,7 @@
                             </div>
                         {% endif %}
 
-                        <div class="container">
+                        <div class="container-fluid align-middle">
                             {% if error_message %}
                                 <div class="alert alert-success">
 

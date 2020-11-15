@@ -122,8 +122,8 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'boxes.Person'
 AUTH_PROFILE_MODULE = 'boxes.Person'
 
-LOGIN_REDIRECT_URL = '/random/'
+LOGIN_REDIRECT_URL = '/login/'
 
-LOGOUT_REDIRECT_URL = '/random/'
+LOGOUT_REDIRECT_URL = '/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
