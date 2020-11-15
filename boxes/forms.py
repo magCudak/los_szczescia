@@ -18,3 +18,15 @@ class UserLoginForm(AuthenticationForm):
         super(UserLoginForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Pseudonim'})
         self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Hasło', 'name': 'Hasło'})
+
+
+from django import forms
+
+
+class CleanSelectionForm(forms.ModelForm):
+    """ form to choose professor to show their schedule"""
+    user_to_clean = forms.ModelChoiceField(queryset=Person.objects.all(), to_field_name='id')
+
+    class Meta:
+        model = Person
+        fields: list = []

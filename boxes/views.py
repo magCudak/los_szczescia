@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views import View
 
-from boxes.forms import UserLoginForm
+from boxes.forms import UserLoginForm, CleanSelectionForm
 from boxes.models import Person, Changer
 
 
@@ -91,6 +91,26 @@ def random_page(request):
             people.update(is_chosen=False)
             people.update(chosen_person=None)
 
+        if request.POST.get('simple_clean'):
+            form = CleanSelectionForm(request.POST)
+            if form.is_valid():
+                user_to_clean = form.cleaned_data['user_to_clean'].username
+                print(user_to_clean)
+                persona = Person.objects.get(username=user_to_clean)
+                if persona.chosen_person is None:
+                    messages.error(request,
+                                   'Nie wylosowano dla %s' % persona.username)
+                else:
+                    this_username = persona.chosen_person.username
+                    persona.chosen_person = None
+                    persona.save()
+                    user_selected_user = Person.objects.get(username=this_username)
+                    user_selected_user.is_chosen = False
+                    user_selected_user.save()
+                    messages.error(request,
+                                   'Wyczyszczono dla %s' % persona.username)
+                render(request, 'losuj.html', {'goal': chosen_person, 'form': form})
+
         if request.POST.get('supercheck'):
             print("supercheck")
             current_user = Person.objects.get(username=request.user.username)
@@ -117,8 +137,7 @@ def random_page(request):
             current_changer = Changer.objects.all()[0]
             current_changer.update(possible=(not current_changer))
             print(current_changer.possible)
-
-    return render(request, 'losuj.html', {'goal': chosen_person})
+    return render(request, 'losuj.html', {'goal': chosen_person, 'form': CleanSelectionForm()})
 
 
 @login_required

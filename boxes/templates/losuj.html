@@ -123,7 +123,7 @@
                         <div class="col card bg-light text-dark align-middle"
                              style="padding-top: 25px; padding-bottom: 25px;">
 
-                            <h3 style="text-align: center;" >Panel administratora</h3>
+                            <h3 style="text-align: center;">Panel administratora</h3>
                             <div class="container">
                                 <form method="POST">
                                     {% csrf_token %}
@@ -160,6 +160,18 @@
                                     <button type="submit" name="superchange" value="clicked"
                                             class="btn btn-primary btn-block btn-lg">
                                         Wymiana! Nie działa...
+                                    </button>
+                                </form>
+                            </div>
+                            <p></p>
+                            <div class="container">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ next }}">
+                                    {{ form.as_p }}
+                                    <button type="submit" name="simple_clean" value="clicked"
+                                            class="btn btn-primary btn-block btn-lg">
+                                        Małe czyszczenie!
                                     </button>
                                 </form>
                             </div>
